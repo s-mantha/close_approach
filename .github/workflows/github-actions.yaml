@@ -1,0 +1,17 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *"
+jobs:
+    run-tests:
+      runs-on: ubuntu-18.04
+      container: python:3.9.0-alpine3.12
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-python@v2
+          with:
+            python-version: 3.7
+        - name: Run Robot tests
+          run: |
+              pip install -r requirements.txt
+              robot --nostatusrc --outputdir results  .
